@@ -1,0 +1,23 @@
+﻿@page "/"
+@using WAPizza.Shared.Models
+
+
+<SfGrid TValue="SchoolEquipment" Toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })">
+    <SfDataManager Url="/api/SchoolEquipment" Adaptor="Adaptors.WebApiAdaptor"></SfDataManager>
+    <GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true"></GridEditSettings>
+    <GridColumns>
+        <GridColumn Field="@nameof(SchoolEquipment.Id)" IsPrimaryKey="true" Visible="false"></GridColumn>
+        <GridColumn Field="@nameof(SchoolEquipment.Nombre)" Width="150"></GridColumn>
+        <GridColumn Field="@nameof(SchoolEquipment.Trabajador)" Width="150"></GridColumn>
+        <GridColumn Field="@nameof(SchoolEquipment.Cantidad)" ValidationRules="@(new ValidationRules(){ Required = true })" Width="90" TextAlign="TextAlign.Right"></GridColumn>
+        <GridColumn Field="@nameof(SchoolEquipment.Precio)" ValidationRules="@(new ValidationRules(){ Range = new double[]{ 1, 1000 } })" Width="90" Format="C2" TextAlign="TextAlign.Right"></GridColumn>
+        <GridColumn Field="@nameof(SchoolEquipment.Estado)" DisplayAsCheckBox="true" Width="70"></GridColumn>
+    </GridColumns>
+    <GridEvents TValue="SchoolEquipment" OnActionFailure="Failure"></GridEvents>
+</SfGrid>
+
+@code{ private void Failure(FailureEventArgs e)
+            {
+                Console.WriteLine(e.Error.Message);
+                Console.WriteLine(e.Error.StackTrace);
+            } }
